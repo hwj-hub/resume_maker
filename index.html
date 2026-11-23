@@ -3151,15 +3151,15 @@ function checks(s, lay) {
     if (!tv(p.email)) warn('<b>이메일</b>이 비어 있습니다. 서류 결과를 메일로 알리는 회사가 많습니다.');
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(tv(p.email))) warn(`이메일 <b>${esc(tv(p.email))}</b>의 형식을 확인하세요.`);
   }
-  if (tv(p.birth) && !ym(p.birth)) warn(`생년월일 <b>${esc(tv(p.birth))}</b>를 읽지 못했습니다. 「1998.03.15」처럼 적어 주세요.`);
+  if (tv(p.birth) && !ym(p.birth)) warn(`생년월일 <b>${esc(tv(p.birth))}</b>${JO.을(tv(p.birth))} 읽지 못했습니다. 「1998.03.15」처럼 적어 주세요.`);
   /* 사진 */
   if (s.photoOn && !s.photo) info('사진 칸이 비어 있습니다. <b>블라인드 채용</b>(공공기관 등)이라면 「사진 칸」을 끄세요. 사진을 붙이라고 한 곳이면 최근 6개월 안에 찍은 증명사진을 넣습니다.');
   /* 기간 */
   const per = (where, list, isCar) => list.forEach(x => {
     const a = ym(x.s), b = isCar && x.now ? nowYm() : ym(x.e);
     const nm = tv(x.name) || where;
-    if (tv(x.s) && !a) warn(`${esc(nm)}의 시작 <b>${esc(tv(x.s))}</b>를 읽지 못했습니다(「2020.03」처럼).`);
-    if (tv(x.e) && !(isCar && x.now) && !b) warn(`${esc(nm)}의 끝 <b>${esc(tv(x.e))}</b>를 읽지 못했습니다(「2024.02」처럼).`);
+    if (tv(x.s) && !a) warn(`${esc(nm)}의 시작 <b>${esc(tv(x.s))}</b>${JO.을(tv(x.s))} 읽지 못했습니다(「2020.03」처럼).`);
+    if (tv(x.e) && !(isCar && x.now) && !b) warn(`${esc(nm)}의 끝 <b>${esc(tv(x.e))}</b>${JO.을(tv(x.e))} 읽지 못했습니다(「2024.02」처럼).`);
     if (a && b && a.m && b.m && ymIdx(b) < ymIdx(a)) bad(`${esc(nm)}의 기간이 <b>거꾸로</b>입니다(${esc(ymText(x.s))} ~ ${esc(ymText(x.e))}).`);
     const t = nowYm();
     if (b && b.m && !(isCar && x.now) && ymIdx(b) > t.y * 12 + t.m - 1 && !(where === '학력' && /예정|재학/.test(x.st))) warn(`${esc(nm)}의 끝 날짜가 <b>작성일보다 뒤</b>입니다. ${isCar ? '지금 다니고 있다면 「재직 중」을 켜세요.' : '「졸업 예정」으로 바꾸세요.'}`);
@@ -4336,7 +4336,7 @@ function doneSteps(kind) {
   if (kind === 'hwp' || kind === 'docx' || kind === 'xlsx') out.push('고친 뒤에는 <b>PDF로 다시 저장</b>해서 내면 받는 쪽 컴퓨터에서 줄이 밀리지 않습니다.');
   if (S.style === 'alba') out.push('문자·카톡으로 보낼 때는 <b>「이미지」</b>로 저장하면 휴대폰에서 바로 열립니다. 첫 줄에 「○○점 ○○ 지원 홍길동입니다」를 쓰세요.');
   else out.push('메일 제목은 <b>「[지원 분야] 이름 지원」</b>처럼, 파일 이름은 「이력서_이름」으로 보내면 담당자가 찾기 쉽습니다.');
-  if (S.cvOn && tv(S.p.company)) out.push(`자기소개서에 <b>${esc(tv(S.p.company))}</b>가 아닌 다른 회사 이름이 없는지 점검 결과를 한 번 더 보세요.`);
+  if (S.cvOn && tv(S.p.company)) out.push(`자기소개서에 <b>${esc(tv(S.p.company))}</b>${JO.이(tv(S.p.company))} 아닌 다른 회사 이름이 없는지 점검 결과를 한 번 더 보세요.`);
   out.push('다음에 다시 고치려면 위쪽 <b>「💾 내 이력서 파일로 보관」</b>으로 내용을 받아 두세요.');
   return out;
 }
